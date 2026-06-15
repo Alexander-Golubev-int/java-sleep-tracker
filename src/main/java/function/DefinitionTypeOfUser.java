@@ -1,12 +1,14 @@
 package function;
 
 import ru.yandex.practicum.sleeptracker.SleepingSession;
+import ru.yandex.practicum.sleeptracker.TypeOfUser;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class DefinitionTypeOfUser implements Function<List<SleepingSession>, Integer> {
+public class DefinitionTypeOfUser implements Function<List<SleepingSession>, Integer>, Consumer<List<SleepingSession>> {
 
     @Override
     public Integer apply(List<SleepingSession> sleepingSessionList) {
@@ -33,6 +35,27 @@ public class DefinitionTypeOfUser implements Function<List<SleepingSession>, Int
         return 3;
     }
 
+    @Override
+    public void accept(List<SleepingSession> sleepingSessionList) {
+        String type;
+        if (apply(sleepingSessionList) == 1) {
+            String temp = TypeOfUser.СОВА.toString().toLowerCase();
+            char[] symbol = temp.toCharArray();
+            symbol[0] = Character.toUpperCase(symbol[0]);
+            type = new String(symbol);
+        } else if (apply(sleepingSessionList) == 2) {
+            String temp = TypeOfUser.ЖАВОРОНОК.toString().toLowerCase();
+            char[] symbol = temp.toCharArray();
+            symbol[0] = Character.toUpperCase(symbol[0]);
+            type = new String(symbol);
+        } else {
+            String temp = TypeOfUser.ГОЛУБЬ.toString().toLowerCase();
+            char[] symbol = temp.toCharArray();
+            symbol[0] = Character.toUpperCase(symbol[0]);
+            type = new String(symbol);
+        }
+        System.out.println("Люди делятся по типам сна, где Вы: " + type);
+    }
 
     private boolean isOwl(SleepingSession s) {
         return s.getBedTime().toLocalTime().isAfter(LocalTime.of(23, 0)) &&

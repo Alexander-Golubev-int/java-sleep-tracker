@@ -11,12 +11,12 @@ import function.NumberOfSleeplessNights;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 public class SleepTrackerApp {
 
     private static List<SleepingSession> sleepingSessionList;
-    static List<Function<List<SleepingSession>, Integer>> functions = List.of(new AmountOfSleepSessions(),
+    static List<Consumer<List<SleepingSession>>> functions = List.of(new AmountOfSleepSessions(),
             new MinimumSessionDuration(),
             new MaximumSessionDuration(),
             new AverageSessionDuration(),
@@ -34,7 +34,6 @@ public class SleepTrackerApp {
         sleepingSessionList = ParsingStringToSleepingSession.parseStringToSleepingSession(stringSleepingSessionList);
         printAnalyzeFunction();
         printInfo();
-
     }
 
     static void printAnalyzeFunction() {
@@ -42,9 +41,6 @@ public class SleepTrackerApp {
     }
 
     static void printInfo() {
-        List<Integer> allAnalyticsValues = functions.stream()
-                .map(x -> x.apply(sleepingSessionList))
-                .toList();
-        SleepAnalysisResult.printInfo(allAnalyticsValues);
+        functions.forEach(functions -> functions.accept(sleepingSessionList));
     }
 }

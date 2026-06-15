@@ -8,7 +8,6 @@ public class ParsingStringToSleepingSession {
 
 
     public static List<SleepingSession> parseStringToSleepingSession(List<String> list) {
-
         return list
                 .stream()
                 .map(ParsingStringToSleepingSession::splitFormater)
@@ -24,5 +23,4 @@ public class ParsingStringToSleepingSession {
         SleepQuality sleepQuality = SleepQuality.valueOf(line[2]);
         return new SleepingSession(bedTime, wakeTime, sleepQuality);
     }
-
 }
